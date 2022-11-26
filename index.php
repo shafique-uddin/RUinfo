@@ -39,7 +39,7 @@ function Ruinfo_installing_db() {
         userName VARCHAR(250) NOT NULL,
         userEmail VARCHAR(250) NOT NULL,
         userPhone VARCHAR(250) NOT NULL,
-        userPass FLOAT(20) NOT NULL,
+        userPass VARCHAR(250) NOT NULL,
         PRIMARY KEY  (id)
     )$db_collate;";
     
@@ -97,7 +97,7 @@ function Ruinfo_update_checking_hndl(){
             userName VARCHAR(250) NOT NULL,
             userEmail VARCHAR(250) NOT NULL,
             userPhone VARCHAR(250) NOT NULL,
-            userPass FLOAT(20) NOT NULL,
+            userPass VARCHAR(250) NOT NULL,
             PRIMARY KEY (id)
         )$db_collate;";
     
