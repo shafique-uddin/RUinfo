@@ -32,8 +32,9 @@ function Ruinfo_installing_db() {
     global $Ruinfo_define_db_version;
     global $wpdb;
     $db_collate = $wpdb->get_charset_collate();
-    $Ruinfo_details_tbl = $wpdb->prefix.'Ruinfo_db';
 
+    // USER DATA TABLE
+    $Ruinfo_details_tbl = $wpdb->prefix.'Ruinfo_db';
     $basic_Ruinfo_start_tbl_query = "CREATE TABLE $Ruinfo_details_tbl (
         id INT(250) NOT NULL AUTO_INCREMENT,
         userName VARCHAR(250) NOT NULL,
@@ -42,11 +43,8 @@ function Ruinfo_installing_db() {
         userPass VARCHAR(250) NOT NULL,
         PRIMARY KEY  (id)
     )$db_collate;";
-    
-
     require_once(ABSPATH.'wp-admin/includes/upgrade.php');
     dbDelta( $basic_Ruinfo_start_tbl_query );
-    
     add_option( 'Ruinfo_db_version_value', "$Ruinfo_define_db_version");
 
     $wpdb->insert(
@@ -58,6 +56,30 @@ function Ruinfo_installing_db() {
             'userPass' => 'Sample Data',
         )
     );
+
+
+    // USER LOGIN META TABLE
+    $Ruinfo_user_meta_tbl = $wpdb->prefix.'Ruinfo_user_meta';
+    $basic_Ruinfo_user_meta_tbl_query = "CREATE TABLE $Ruinfo_user_meta_tbl (
+        ssid INT(250) NOT NULL AUTO_INCREMENT,
+        userSessionId VARCHAR(250) NOT NULL,
+        userSessionKey VARCHAR(250) NOT NULL,
+        userSessionValue VARCHAR(250) NOT NULL,
+        userSessionExpiry VARCHAR(250) NOT NULL
+        PRIMARY KEY (id)
+    )$db_collate;";
+    dbDelta( $basic_Ruinfo_user_meta_tbl_query );
+    
+    $wpdb->insert(
+        $Ruinfo_user_meta_tbl,
+        array(
+            'userSessionId' => 'Sample Link',
+            'userSessionKey' => 'Sample Data',
+            'userSessionValue' => 'Sample Data',
+            'userSessionExpiry' => 'Sample Data',
+        )
+    );
+
 
     // Clear the permalinks after the post type has been registered.
     flush_rewrite_rules();
@@ -72,10 +94,16 @@ register_activation_hook( __FILE__, 'Ruinfo_installing_db');
 function Ruinfo_deactivation_db_info() {
     global $Ruinfo_define_db_version;
     global $wpdb;
+    // USER DATA TABLE
     $Ruinfo_details_tbl = $wpdb->prefix.'Ruinfo_db';
-
     $Ruinfo_details_tbl_sample_data_clean_query = "DELETE FROM $Ruinfo_details_tbl WHERE userName LIKE 'Sample Data'";
     $wpdb->query($Ruinfo_details_tbl_sample_data_clean_query);
+
+    // USER LOGIN META TABLE
+    $Ruinfo_user_meta_tbl = $wpdb->prefix.'Ruinfo_user_meta';
+    $Ruinfo_user_meta_tbl_sample_data_clean_query = "DELETE FROM $Ruinfo_user_meta_tbl WHERE userName LIKE 'Sample Data'";
+    $wpdb->query($Ruinfo_user_meta_tbl_sample_data_clean_query);
+    
 
     // Clear the permalinks to remove our post type's rules from the database.
     flush_rewrite_rules();
@@ -118,8 +146,6 @@ function Ruinfo_update_checking_hndl(){
                 'id' => 1
             )
         );
-
-
         // IF NEED ANY COLUMN DELETE
     }
 }
