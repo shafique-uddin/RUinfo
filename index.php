@@ -63,22 +63,12 @@ function Ruinfo_installing_db() {
     $basic_Ruinfo_user_meta_tbl_query = "CREATE TABLE $Ruinfo_user_meta_tbl (
         ssid INT(250) NOT NULL AUTO_INCREMENT,
         userSessionId VARCHAR(250) NOT NULL,
-        userSessionKey VARCHAR(250) NOT NULL,
+        -- userSessionKey VARCHAR(250) NOT NULL,
         userSessionValue VARCHAR(250) NOT NULL,
-        userSessionExpiry VARCHAR(250) NOT NULL
-        PRIMARY KEY (id)
+        -- userSessionExpiry VARCHAR(250) NOT NULL,
+        PRIMARY KEY (ssid)
     )$db_collate;";
     dbDelta( $basic_Ruinfo_user_meta_tbl_query );
-    
-    $wpdb->insert(
-        $Ruinfo_user_meta_tbl,
-        array(
-            'userSessionId' => 'Sample Link',
-            'userSessionKey' => 'Sample Data',
-            'userSessionValue' => 'Sample Data',
-            'userSessionExpiry' => 'Sample Data',
-        )
-    );
 
 
     // Clear the permalinks after the post type has been registered.
