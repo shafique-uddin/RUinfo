@@ -166,7 +166,7 @@ function Ruinfo_all_varsity_info_hndlr(){
  * Add New Varsity Information page Handler
  */
 function Ruinfo_add_new_model_test_frm_hndlr(){
-    include_once ('includes/admin-pages/form.php');
+    include_once ('includes/model-test/form.php');
 }
 
 
@@ -183,12 +183,13 @@ function Ruinfo_file_attachment_frm_hndlr(){
  * Add CSS AND JS
  */
 function Ruinfo_admin_page_CSS_JS_include_hndlr($screen){
-    if(('toplevel_page_admissioninfo' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
+    if(('ruinfo-info_page_add-new-model-test' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
        wp_enqueue_style( 'Ruinfo-info-custom-css', plugin_dir_url( __FILE__ ).'admin/css/main.css', null, time() );
        wp_enqueue_style( 'Ruinfo-info-bootstrap-css-handler', '//cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-stylesheet', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-demo-stylesheet', '/resources/demos/style.css');
        wp_enqueue_script( 'Ruinfo-info-main-jquery', plugin_dir_url( __FILE__ ).'admin/js/main.js', null , null , true );
+       wp_enqueue_script( 'Ruinfo-info-custom-javascript', plugin_dir_url( __FILE__ ).'lib/js/custom.js', null , null , true );
        wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-1.12.4.js', array('json2'), '1.12.4', true );
        wp_enqueue_script( 'jquery-ui-datepicker', 'https://code.jquery.com/ui/1.12.1/jquery-ui.js', array('jquery'), '1.11.4', true );
     }
