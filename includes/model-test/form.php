@@ -39,9 +39,23 @@ if(isset($_GET['edit'])){
     <div class="col-2">Total Time</div>
     <div class="col-10"><input type="text" name="subjectName" id=""> Minutes</div>
 </div>
-<div class="row">
+<section class="question_sction">
+    <div class="row questions">
+        <div class="col-1">1.</div>
+        <div class="col-11"><input type="text" name="question_1" id="" placeholder="Your Question" size="100"></div>
+    </div>
+    <div class="row options">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <input type="radio" name="correct_answer_for_qs_1" id="">
+            <input type="text" name="options_1_for_question_1" id="" placeholder="Option 1" size="70">
+            <button id="add-options">Add Options</button>
+        </div>
+    </div>
+</section>
+<div class="row" style="margin-top: 20px;">
     <div class="col-2"></div>
-    <div class="col-10"><button id="question-add">Add Question</button></div>
+    <div class="col-10"><button id="add_question">Add Question</button></div>
 </div>
 
 </form>

@@ -149,7 +149,7 @@ function Ruinfo_admin_menu_hndlr(){
     add_menu_page( 'Ruinfo Information', 'Ruinfo Info', 'manage_options', 'Ruinfopage', 'Ruinfo_all_varsity_info_hndlr', 'dashicons-database-view' );
     add_submenu_page( 'Ruinfopage', 'Total Member', 'Total Member', 'manage_options', 'Ruinfopage' );
     add_submenu_page( 'Ruinfopage', 'Add Model Test', 'Add Model Test', 'manage_options', 'add-new-model-test', 'Ruinfo_add_new_model_test_frm_hndlr' );
-    add_submenu_page( 'Ruinfopage', 'Ruinfo Info File Attachment', 'Attachment', 'manage_options', 'Ruinfo-info-file-attachment', 'Ruinfo_file_attachment_frm_hndlr' );
+    add_submenu_page( 'Ruinfopage', 'Ruinfo Info All Model Test', 'All Model Test', 'manage_options', 'Ruinfo-info-all-model-test', 'Ruinfo_all_model_test_frm_hndlr' );
 }
 add_action('admin_menu','Ruinfo_admin_menu_hndlr');
 
@@ -163,7 +163,7 @@ function Ruinfo_all_varsity_info_hndlr(){
 
 
 /**
- * Add New Varsity Information page Handler
+ * Add New Model Test page Handler
  */
 function Ruinfo_add_new_model_test_frm_hndlr(){
     include_once ('includes/model-test/form.php');
@@ -171,9 +171,9 @@ function Ruinfo_add_new_model_test_frm_hndlr(){
 
 
 /**
- * ADMIN ATTACHMENT FILE page Handler
+ * All Model Test page Handler
  */
-function Ruinfo_file_attachment_frm_hndlr(){
+function Ruinfo_all_model_test_frm_hndlr(){
     include_once ('includes/admin-pages/attachment.php');
 }
 
