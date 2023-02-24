@@ -55,7 +55,7 @@ if(isset($_GET['edit'])){
 </section>
 <div class="row" style="margin-top: 20px;">
     <div class="col-2"></div>
-    <div class="col-10"><button id="add_question">Add Question</button></div>
+    <div class="col-10"><button id="add_question" onclick="myfun()">Add Question</button></div>
 </div>
 
 </form>
