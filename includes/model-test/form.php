@@ -26,7 +26,7 @@ if(isset($_GET['edit'])){
 
 
 <div id="varsityinfowrap" class="my-form-wrap"> 
-<form method="POST">
+<form method="POST" id="modeltestform">
 <div class="row">
     <div class="col-2">Subject Name</div>
     <div class="col-10"><input type="text" name="subjectName" id=""></div>
@@ -40,25 +40,30 @@ if(isset($_GET['edit'])){
     <div class="col-10"><input type="text" name="subjectName" id=""> Minutes</div>
 </div>
 <section class="question_sction">
-    <div class="row questions">
-        <div class="col-1">1.</div>
-        <div class="col-11"><input type="text" name="question_1" id="" placeholder="Your Question" size="100"></div>
-    </div>
-    <div class="row options">
-        <div class="col-1"></div>
-        <div class="col-11">
-            <input type="radio" name="correct_answer_for_qs_1" id="">
-            <input type="text" name="options_1_for_question_1" id="" placeholder="Option 1" size="70">
-            <button id="add-options">Add Options</button>
+
+    <div class="row">
+        <div class="col-12" id="qusandans">
+
         </div>
     </div>
+
 </section>
-<div class="row" style="margin-top: 20px;">
-    <div class="col-2"></div>
-    <div class="col-10"><button id="add_question" onclick="myfun()">Add Question</button></div>
+
+
+<div class="row">
+    <div class="col-12"><input type="submit" value="Submit"></div>
 </div>
 
 </form>
+
+<div class="row" style="margin-top: 20px;">
+    <div class="col-2">
+<!-- <button id="add-options" onclick="add_options_btn()">Add Options</button> -->
+    </div>
+    <div class="col-10"><button onclick="add_question()">Add Question</button></div>
+</div>
+
+
 </div>
 
 <?php // endwhile; ?>

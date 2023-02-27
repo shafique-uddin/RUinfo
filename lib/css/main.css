@@ -1,0 +1,52 @@
+
+
+
+
+#qusandans{
+    position: relative;
+}
+
+
+.question_class {
+    width: 100%;
+    display: block;
+    float: left;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+
+.optionlist {
+    width: 98%;
+    float: right;
+    display: block;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+
+.answerradio {
+    position: relative;
+    float: left;
+}
+
+
+
+
+.addquestionbutton {
+    position: absolute;
+    bottom: 10px;
+    float: right;
+}
+
+
+
+input[type=radio] {
+    border-radius: 50%;
+    margin-right: 0.25rem;
+    line-height: .71428571;
+    position: relative;
+    clear: both;
+    top: 12px;
+    float: left;
+}
