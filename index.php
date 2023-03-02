@@ -237,20 +237,66 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
 
 
 
- // DATA STORING IN DB
+//  // DATA STORING IN DB
  if(isset($_POST['model_test'])){
 
+    global $wpdb;
     $question_limit = 100;  // HOW MUCH QUESTION WILL BE STOR
-    $options_limit = 5;     // OPTIONS LIMIT
+    $options_limit = 4;     // OPTIONS LIMIT
+    $modelTestSubjectName = $_POST["subjectName"];
+    $modelTestPaper = $_POST["subjectPaper"];
+    $currentTime = time();
+    $subjectId = $modelTestSubjectName.$currentTime; // SUBJECT FOR DB
 
-    // FIND OUT EMPTY QUESTION OR ERROR
-    for ($i=1; $i <= $question_limit; $i++) { 
+    // STORE DATA FOR MODEL TEST SUBJECT TABLE
+    $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
+    $wpdb->insert(
+        $Ruinfo_model_test_subject_list_tbl,
+        array(
+            'subject_id' => $subjectId,
+            'subjectName' => $modelTestSubjectName,
+            'paperNo' => $modelTestPaper
+        )
+    );
 
-        // FIND OUT EMPTY QUESTION
-        if(isset($_POST["question_no_$i"])){
-            echo $i. "<br>";
 
+
+    // FOR QUESTION
+    for ($quesiton_no=1; $quesiton_no <= $question_limit; $quesiton_no++) { 
+        if(isset($_POST["question_no_$quesiton_no"])){
+            $question_title = $_POST["question_no_$quesiton_no"];
+            $all_options = '';   // TO STORE OPTIONS
+
+            // FOR OPTIONS
+            for ($option_no=1; $option_no <= $options_limit; $option_no++) { 
+
+                $single_Option = $_POST["options_".$option_no."_for_question_".$quesiton_no];
+                $all_options .= $single_Option.',';
+
+                
+            }
+
+            echo $question_title."<br>";
+                echo $all_options."<br>";
             
+
+
+            // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
+            // $wpdb->insert(
+            //     $Ruinfo_model_test_question_tbl,
+            //     array(
+            //         'subject_id' => $subjectId,
+            //         'question_title' => $question_title,
+            //         'question_options' => $all_options,
+            //         'correct_answer' => '1'
+            //     )
+            // );
+
+
+
+
+
+            // if()
         }
         // IF NOT FOUND ANY QUESTION
         else {
@@ -259,4 +305,4 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
     }
     exit;
  }
-?>
+// ?>

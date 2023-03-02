@@ -13,35 +13,38 @@ if(isset($_GET['edit'])){
 
 
 <div class="admission-info-form-header">
-    <div class="left-div">
-        <?php _e('Date: '.date('d-F-Y')); ?>
-    </div>
-    <div class="right-div">
-        <?php 
-            if(isset($_GET['edit'])){ ?>
-    <a type="button" href="<?php echo admin_url().'admin.php?page=add-new-varsity-info'; ?>">Add New Info</a>
-        <?php } ?>
+    <div class="row">
+        <div class="col-6">
+            <div class="left-div">
+                <?php _e('Date: '.date('d-F-Y')); ?>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="right-div">
+                <button>Add New Model Test</button>
+            </div>
+        </div>
     </div>
 </div>
 
 
 <div id="varsityinfowrap" class="my-form-wrap"> 
-<form method="POST" id="modeltestform">
+<form method="POST" id="modeltestform" name="modeltestform" onsubmit="return validateForm()">
 <div class="row">
     <div class="col-2">Subject Name</div>
-    <div class="col-10"><input type="text" name="subjectName" id=""></div>
+    <div class="col-10"><input type="text" name="subjectName" id="" required></div>
 </div>
 <div class="row">
     <div class="col-2">1st/2nd Paper</div>
-    <div class="col-10"><input type="text" name="subjectPaper" id=""></div>
+    <div class="col-10"><input type="text" name="subjectPaper" id="" required></div>
 </div>
 <div class="row">
     <div class="col-2">Topic/Chapter Name</div>
-    <div class="col-10"><input type="text" name="topicName" id=""></div>
+    <div class="col-10"><input type="text" name="topicName" id="" required></div>
 </div>
 <div class="row">
     <div class="col-2">Total Time</div>
-    <div class="col-10"><input type="text" name="subjectName" id=""> Minutes</div>
+    <div class="col-10"><input type="text" name="totalTime" id=""> Minutes</div>
 </div>
 <section class="question_sction">
 
@@ -55,7 +58,7 @@ if(isset($_GET['edit'])){
 
 
 <div class="row">
-    <div class="col-12"><input type="submit" value="Submit" name="model_test"></div>
+    <div class="col-12"><button id="add-options" onclick="add_options_btn()">Add Options</button><input type="submit" value="Submit" name="model_test"></div>
 </div>
 
 </form>
