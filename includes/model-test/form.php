@@ -32,6 +32,10 @@ if(isset($_GET['edit'])){
     <div class="col-10"><input type="text" name="subjectName" id=""></div>
 </div>
 <div class="row">
+    <div class="col-2">1st/2nd Paper</div>
+    <div class="col-10"><input type="text" name="subjectPaper" id=""></div>
+</div>
+<div class="row">
     <div class="col-2">Topic/Chapter Name</div>
     <div class="col-10"><input type="text" name="topicName" id=""></div>
 </div>
@@ -51,7 +55,7 @@ if(isset($_GET['edit'])){
 
 
 <div class="row">
-    <div class="col-12"><input type="submit" value="Submit"></div>
+    <div class="col-12"><input type="submit" value="Submit" name="model_test"></div>
 </div>
 
 </form>
@@ -60,7 +64,7 @@ if(isset($_GET['edit'])){
     <div class="col-2">
 <!-- <button id="add-options" onclick="add_options_btn()">Add Options</button> -->
     </div>
-    <div class="col-10"><button onclick="add_question()">Add Question</button></div>
+    <div class="col-10"><button id="add-question" onclick="add_question()">Add Question</button></div>
 </div>
 
 

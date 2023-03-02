@@ -50,3 +50,8 @@ input[type=radio] {
     top: 12px;
     float: left;
 }
+
+
+.hiddenClass {
+    display: none;
+}

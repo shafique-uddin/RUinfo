@@ -23,7 +23,7 @@
  
  // Ruinfo INFO DB VERSION
  global $Ruinfo_define_db_version;
- $Ruinfo_define_db_version = '1.0.0';
+ $Ruinfo_define_db_version = '1.1.0';
  
 /**
 * Activate the plugin.
@@ -71,6 +71,32 @@ function Ruinfo_installing_db() {
     dbDelta( $basic_Ruinfo_user_meta_tbl_query );
 
 
+    // MODEL TEST SUBJECT TABLE
+    $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
+    $Ruinfo_model_test_subject_list_tbl_query = "CREATE TABLE $Ruinfo_model_test_subject_list_tbl (
+        id INT(250) NOT NULL AUTO_INCREMENT,
+        subject_id VARCHAR(250) NOT NULL,
+        subjectName VARCHAR(250) NOT NULL,
+        paperNo VARCHAR(250) NOT NULL,
+        PRIMARY KEY (id)
+    )$db_collate;";
+    dbDelta( $Ruinfo_model_test_subject_list_tbl_query );
+
+
+
+    // MODEL TEST QUESTION+ANSWER TABLE
+    $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+    $Ruinfo_model_test_question_tbl_query = "CREATE TABLE $Ruinfo_model_test_question_tbl (
+        id INT(250) NOT NULL AUTO_INCREMENT,
+        subject_id VARCHAR(250) NOT NULL,
+        question_title VARCHAR(250) NOT NULL,
+        question_options VARCHAR(250) NOT NULL,
+        correct_answer VARCHAR(250) NOT NULL,
+        PRIMARY KEY (id)
+    )$db_collate;";
+    dbDelta( $Ruinfo_model_test_question_tbl_query );
+
+
     // Clear the permalinks after the post type has been registered.
     flush_rewrite_rules();
 }
@@ -93,6 +119,11 @@ function Ruinfo_deactivation_db_info() {
     $Ruinfo_user_meta_tbl = $wpdb->prefix.'Ruinfo_user_meta';
     $Ruinfo_user_meta_tbl_sample_data_clean_query = "DELETE FROM $Ruinfo_user_meta_tbl WHERE userName LIKE 'Sample Data'";
     $wpdb->query($Ruinfo_user_meta_tbl_sample_data_clean_query);
+
+    // MODEL TEST SUBJECT TABLE
+    // $Ruinfo_model_test_subject_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+    // $Ruinfo_model_test_question_tbl = "DROP TABLE IF EXISTS $Ruinfo_model_test_question_tbl";
+    // $wpdb->query($Ruinfo_model_test_question_tbl);
     
 
     // Clear the permalinks to remove our post type's rules from the database.
@@ -202,4 +233,30 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
  * REDIRECT LOGIN USER TO EMPTY DASHBOARD PAGE
  * ADMIN QUESTION PAGE
  */
+
+
+
+
+ // DATA STORING IN DB
+ if(isset($_POST['model_test'])){
+
+    $question_limit = 100;  // HOW MUCH QUESTION WILL BE STOR
+    $options_limit = 5;     // OPTIONS LIMIT
+
+    // FIND OUT EMPTY QUESTION OR ERROR
+    for ($i=1; $i <= $question_limit; $i++) { 
+
+        // FIND OUT EMPTY QUESTION
+        if(isset($_POST["question_no_$i"])){
+            echo $i. "<br>";
+
+            
+        }
+        // IF NOT FOUND ANY QUESTION
+        else {
+            break;
+        }
+    }
+    exit;
+ }
 ?>
