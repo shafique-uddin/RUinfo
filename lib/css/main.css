@@ -51,6 +51,11 @@ input[type=radio] {
     float: left;
 }
 
+input[type=button]{
+    border: none;
+    cursor: text!important;
+}
+
 
 .hiddenClass {
     display: none;
