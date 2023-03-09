@@ -235,12 +235,90 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
  */
 
 
+ 
 
 
-//  // DATA STORING IN DB
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /**
+ * Admin Admission Info Pages Notice
+ */
+ ################################### EMPTY FIELD NOTICE ###################################
+ function empty_notice_hndlr(){ ?>
+    <div class="row">
+        <div class="col-12">
+            <div class="notice notice-error is-dismissible">
+                <p>
+                    <?php _e("Some Field is Empty. Please Check Again."); echo 'ssssss'; ?>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php 
+}
+
+
+
+
+    // DATA STORING IN DB
+    // FORM VALIDATION
  if(isset($_POST['model_test'])){
+    
 
-    global $wpdb;
+    
+
+
+
+    $total_Question = $_POST["totalNumlberOfQueston"]; 
+    // CHECK ANY QUESTION FIELD IS EMPTY
+    for ($i=1; $i <= $total_Question; $i++) { 
+        if(empty($_POST["question_no_".$i])){
+            echo 'some question field is empty. <br>';
+        }
+        
+        // CHECK ANSWER OF ANY QUESTION IS EMPTY
+        if(empty($_POST["correct_answer_for_question_".$i])){
+            echo 'some answer of question is missig <br>';
+        }
+    }
+    exit;
+
+
+
+
+    if( empty($_POST['subjectName']) || empty($_POST['subjectPaper']) || empty($_POST['topicName'])){
+        // add_action('admin_notices', 'empty_notice_hndlr');
+        echo 'some field is empty.';
+    }
+    else{
+        
+        // input button validation check
+            for ($i=1; $i <= 4; $i++) { 
+                if(empty($_POST["answer_for_question_".$i])){
+                    // add_action('admin_notices', 'empty_notice_for_radio_btn_hndlr');
+        echo 'some field is empty.';
+exit;
+                }
+                else{
+                    
+                    
+
+
+
+
+
+                    global $wpdb;
     $question_limit = 100;  // HOW MUCH QUESTION WILL BE STOR
     $options_limit = 4;     // OPTIONS LIMIT
     $modelTestSubjectName = $_POST["subjectName"];
@@ -303,6 +381,30 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
             break;
         }
     }
+
+
+
+
+
+                    
+                    
+                    
+                    exit;
+                }
+            }
+    }
+
+
+
+    
+
+
+
+
     exit;
+
  }
+
+
+
 // ?>
