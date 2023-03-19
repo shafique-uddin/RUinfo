@@ -197,7 +197,7 @@ function Ruinfo_all_varsity_info_hndlr(){
  * Add New Model Test page Handler
  */
 function Ruinfo_add_new_model_test_frm_hndlr(){
-    include_once ('includes/model-test/form.php');
+    include_once ('includes/create-model-test/form.php');
 }
 
 
@@ -205,7 +205,7 @@ function Ruinfo_add_new_model_test_frm_hndlr(){
  * All Model Test page Handler
  */
 function Ruinfo_all_model_test_frm_hndlr(){
-    include_once ('includes/admin-pages/attachment.php');
+    include_once ('includes/model-test/index.php');
 }
 
 
@@ -235,53 +235,10 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
  */
 
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /**
- * Admin Admission Info Pages Notice
- */
- ################################### EMPTY FIELD NOTICE ###################################
- function empty_notice_hndlr(){ ?>
-    <div class="row">
-        <div class="col-12">
-            <div class="notice notice-error is-dismissible">
-                <p>
-                    <?php _e("Some Field is Empty. Please Check Again."); echo 'ssssss'; ?>
-                </p>
-            </div>
-        </div>
-    </div>
-<?php 
-}
-
-
-
-
-    // DATA STORING IN DB
-    // FORM VALIDATION
+// DATA STORING IN DB
+// FORM VALIDATION
  if(isset($_POST['model_test'])){
     
-########################### PLEASE CHECK ############################################
-/**
- * INSERT DATA INTO 1 COLLUMN LIKE QUESTION+OPTIONS+CORRECT_ANSWER
- */
-##################################### IMPORTANT NOTICE #################################
-    
-
     $total_Question = $_POST["totalNumlberOfQueston"]; 
     $optionLimit = 4;
 
@@ -303,10 +260,6 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
         )
     );
 
-
-
-
-
     // RECEIVING QUESTION AND OPTIONS
     for ($getQuestion=1; $getQuestion <= $total_Question; $getQuestion++) { 
         // echo $_POST["question_no_".$getQuestion]."<br>";
@@ -320,8 +273,6 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
         // GET CORRECT ANSWER FOR THIS QUESTION
         $correctAnswerForThisQuestionIs = $_POST["answer_for_question_no_".$getQuestion];
 
-
-
         // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
             $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
             $wpdb->insert(
@@ -333,8 +284,6 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
                     'correct_answer' => $correctAnswerForThisQuestionIs
                 )
             );
-        // echo $correctAnswerForThisQuestionIs;
-        // echo $optionIs;
     }
    
  }
