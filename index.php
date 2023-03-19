@@ -11,7 +11,7 @@
 * Plugin Name:       RUinfo
 * Plugin URI:        https://shafique.com
 * Description:       Description of the plugin.
-* Version:           1.0.0
+* Version:           1.1.0
 * Requires at least: 5.2
 * Requires PHP:      7.2
 * Author:            Muhammad Shafique Uddin
@@ -71,20 +71,23 @@ function Ruinfo_installing_db() {
     dbDelta( $basic_Ruinfo_user_meta_tbl_query );
 
 
-    // MODEL TEST SUBJECT TABLE
+    // CREATE MODEL TEST SUBJECT TABLE
     $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
     $Ruinfo_model_test_subject_list_tbl_query = "CREATE TABLE $Ruinfo_model_test_subject_list_tbl (
         id INT(250) NOT NULL AUTO_INCREMENT,
         subject_id VARCHAR(250) NOT NULL,
         subjectName VARCHAR(250) NOT NULL,
         paperNo VARCHAR(250) NOT NULL,
+        topicOrChapter VARCHAR(250) NOT NULL,
+        modelTestTime VARCHAR(250) NOT NULL,
+        modelTestStatus VARCHAR(250) NOT NULL,
         PRIMARY KEY (id)
     )$db_collate;";
     dbDelta( $Ruinfo_model_test_subject_list_tbl_query );
 
 
 
-    // MODEL TEST QUESTION+ANSWER TABLE
+    // CREATE MODEL TEST QUESTION+ANSWER TABLE
     $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
     $Ruinfo_model_test_question_tbl_query = "CREATE TABLE $Ruinfo_model_test_question_tbl (
         id INT(250) NOT NULL AUTO_INCREMENT,
@@ -214,7 +217,10 @@ function Ruinfo_all_model_test_frm_hndlr(){
  * Add CSS AND JS
  */
 function Ruinfo_admin_page_CSS_JS_include_hndlr($screen){
-    if(('ruinfo-info_page_add-new-model-test' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
+    // echo "<pre>";
+    // print_r($screen);
+    // echo "</pre>"; exit;
+    if(('ruinfo-info_page_add-new-model-test' == $screen)||('ruinfo-info_page_Ruinfo-info-all-model-test' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
        wp_enqueue_style( 'Ruinfo-info-custom-css', plugin_dir_url( __FILE__ ).'lib/css/main.css', null, time() );
        wp_enqueue_style( 'Ruinfo-info-bootstrap-css-handler', '//cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-stylesheet', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
@@ -231,7 +237,6 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
  * INSERT REGISTRATION DATA TO DB
  * MAKE LOGIN VALIDATION
  * REDIRECT LOGIN USER TO EMPTY DASHBOARD PAGE
- * ADMIN QUESTION PAGE
  */
 
 
@@ -256,7 +261,10 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
         array(
             'subject_id' => $subjectId,
             'subjectName' => $modelTestSubjectName,
-            'paperNo' => $modelTestPaper
+            'paperNo' => $modelTestPaper,
+            'topicOrChapter' => $modelTestTopicOrChapter,
+            'modelTestTime' => $modelTestTime,
+            'modelTestStatus' => '1'
         )
     );
 
@@ -285,8 +293,23 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
                 )
             );
     }
-   
  }
+
+
+// COLLECT ALL MODEL TEST DATA
+function all_model_test_data_hndlr(){
+    global $wpdb;
+    $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
+
+    $fivesdrafts = $wpdb->get_results(
+        "
+            SELECT * FROM $Ruinfo_model_test_subject_list_tbl
+        "
+    );
+
+    return $fivesdrafts;
+}
+add_filter('all_model_test_data_is_here', 'all_model_test_data_hndlr', 10);
 
 
 
