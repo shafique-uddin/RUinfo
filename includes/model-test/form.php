@@ -33,19 +33,19 @@ if(isset($_GET['edit'])){
     <div class="row">
         <div class="col-2">Subject Name</div>
         <div class="col-10">
-            <input type="text" name="subjectName" id="" value="<?php if(isset($_POST['subjectName'])){echo $_POST['subjectName'];} ?>">
+            <input type="text" required name="subjectName" id="" value="<?php if(isset($_POST['subjectName'])){echo $_POST['subjectName'];} ?>">
         </div>
     </div>
     <div class="row">
         <div class="col-2">1st/2nd Paper</div>
         <div class="col-10">
-            <input type="text" name="subjectPaper" id="" value="<?php if(isset($_POST['subjectPaper'])){echo $_POST['subjectPaper'];} ?>">
+            <input type="text" required name="subjectPaper" id="" value="<?php if(isset($_POST['subjectPaper'])){echo $_POST['subjectPaper'];} ?>">
         </div>
     </div>
     <div class="row">
         <div class="col-2">Topic/Chapter Name</div>
         <div class="col-10">
-            <input type="text" name="topicName" id="" value="<?php if(isset($_POST['topicName'])){echo $_POST['topicName'];} ?>">
+            <input type="text" required name="topicName" id="" value="<?php if(isset($_POST['topicName'])){echo $_POST['topicName'];} ?>">
         </div>
     </div>
     <div class="row">

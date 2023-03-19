@@ -274,93 +274,18 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
     // DATA STORING IN DB
     // FORM VALIDATION
  if(isset($_POST['model_test'])){
-    
-
-    
-
-
-
-    echo $_POST["answer_for_question_no_1"]; exit;
-    $total_Question = $_POST["totalNumlberOfQueston"]; 
-    // CHECK ANY QUESTION FIELD IS EMPTY
-    for ($i=1; $i <= $total_Question; $i++) { 
-        if(empty($_POST["question_no_".$i])){
-            echo 'some question field is empty. <br>';
-        }
-        
-        // CHECK ANSWER OF ANY QUESTION IS EMPTY
-        if(empty($_POST["correct_answer_for_question_".$i])){
-            echo 'some answer of question is missig <br>';
-        }
-    }
-    exit;
-
-
-
-
-    if( empty($_POST['subjectName']) || empty($_POST['subjectPaper']) || empty($_POST['topicName'])){
-        // add_action('admin_notices', 'empty_notice_hndlr');
-        echo 'some field is empty.';
-    }
-    else{
-        
-        // input button validation check
-            for ($i=1; $i <= 4; $i++) { 
-                if(empty($_POST["answer_for_question_".$i])){
-                    // add_action('admin_notices', 'empty_notice_for_radio_btn_hndlr');
-        echo 'some field is empty.';
-exit;
-                }
-                else{
-                    
-                    
-
-
-
-
-
-                    global $wpdb;
-    $question_limit = 100;  // HOW MUCH QUESTION WILL BE STOR
-    $options_limit = 4;     // OPTIONS LIMIT
-    $modelTestSubjectName = $_POST["subjectName"];
-    $modelTestPaper = $_POST["subjectPaper"];
-    $currentTime = time();
-    $subjectId = $modelTestSubjectName.$currentTime; // SUBJECT FOR DB
-
-    // STORE DATA FOR MODEL TEST SUBJECT TABLE
-    $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
-    $wpdb->insert(
-        $Ruinfo_model_test_subject_list_tbl,
-        array(
-            'subject_id' => $subjectId,
-            'subjectName' => $modelTestSubjectName,
-            'paperNo' => $modelTestPaper
-        )
-    );
-
-
-
-    // FOR QUESTION
-    for ($quesiton_no=1; $quesiton_no <= $question_limit; $quesiton_no++) { 
-        if(isset($_POST["question_no_$quesiton_no"])){
-            $question_title = $_POST["question_no_$quesiton_no"];
-            $all_options = '';   // TO STORE OPTIONS
-
-            // FOR OPTIONS
-            for ($option_no=1; $option_no <= $options_limit; $option_no++) { 
-
-                $single_Option = $_POST["options_".$option_no."_for_question_".$quesiton_no];
-                $all_options .= $single_Option.',';
-
-                
-            }
-
-            echo $question_title."<br>";
-                echo $all_options."<br>";
-            
-
-
-            // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
+    // global $wpdb;
+    // // STORE DATA FOR MODEL TEST SUBJECT TABLE
+    // $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
+    // $wpdb->insert(
+    //     $Ruinfo_model_test_subject_list_tbl,
+    //     array(
+    //         'subject_id' => $subjectId,
+    //         'subjectName' => $modelTestSubjectName,
+    //         'paperNo' => $modelTestPaper
+    //     )
+    // );
+    // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
             // $wpdb->insert(
             //     $Ruinfo_model_test_question_tbl,
             //     array(
@@ -372,38 +297,26 @@ exit;
             // );
 
 
-
-
-
-            // if()
-        }
-        // IF NOT FOUND ANY QUESTION
-        else {
-            break;
-        }
-    }
-
-
-
-
-
-                    
-                    
-                    
-                    exit;
-                }
-            }
-    }
-
-
-
+########################### PLEASE CHECK ############################################
+/**
+ * INSERT DATA INTO 1 COLLUMN LIKE QUESTION+OPTIONS+CORRECT_ANSWER
+ */
+##################################### IMPORTANT NOTICE #################################
     
 
-
+    $total_Question = $_POST["totalNumlberOfQueston"]; 
+    echo $total_Question; exit;
+   
+    if( empty($_POST['subjectName']) || empty($_POST['subjectPaper']) || empty($_POST['topicName'])){
+        // add_action('admin_notices', 'empty_notice_hndlr');
+        echo 'some field is empty.';
+    }
+    else{
+        
+    }
 
 
     exit;
-
  }
 
 
