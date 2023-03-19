@@ -60,3 +60,10 @@ input[type=button]{
 .hiddenClass {
     display: none;
 }
+
+
+.question_section {
+    margin: 10px 0px;
+    border: 1px solid rgb(135, 168, 146);
+    padding: 0px 15px 10px;
+}

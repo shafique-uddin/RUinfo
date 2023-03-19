@@ -274,29 +274,7 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
     // DATA STORING IN DB
     // FORM VALIDATION
  if(isset($_POST['model_test'])){
-    // global $wpdb;
-    // // STORE DATA FOR MODEL TEST SUBJECT TABLE
-    // $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
-    // $wpdb->insert(
-    //     $Ruinfo_model_test_subject_list_tbl,
-    //     array(
-    //         'subject_id' => $subjectId,
-    //         'subjectName' => $modelTestSubjectName,
-    //         'paperNo' => $modelTestPaper
-    //     )
-    // );
-    // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
-            // $wpdb->insert(
-            //     $Ruinfo_model_test_question_tbl,
-            //     array(
-            //         'subject_id' => $subjectId,
-            //         'question_title' => $question_title,
-            //         'question_options' => $all_options,
-            //         'correct_answer' => '1'
-            //     )
-            // );
-
-
+    
 ########################### PLEASE CHECK ############################################
 /**
  * INSERT DATA INTO 1 COLLUMN LIKE QUESTION+OPTIONS+CORRECT_ANSWER
@@ -305,18 +283,60 @@ add_action( 'admin_enqueue_scripts', 'Ruinfo_admin_page_CSS_JS_include_hndlr', 1
     
 
     $total_Question = $_POST["totalNumlberOfQueston"]; 
-    echo $total_Question; exit;
+    $optionLimit = 4;
+
+    $modelTestSubjectName = $_POST["subjectName"]; 
+    $subjectId = $modelTestSubjectName.time();
+    $modelTestPaper = $_POST["subjectPaper"]; 
+    $modelTestTopicOrChapter = $_POST["topicName"]; 
+    $modelTestTime = $_POST["totalTime"]; 
+
+    global $wpdb;
+    // STORE DATA FOR MODEL TEST SUBJECT TABLE
+    $Ruinfo_model_test_subject_list_tbl = $wpdb->prefix.'Ruinfo_sub_wise_mdl_tst';
+    $wpdb->insert(
+        $Ruinfo_model_test_subject_list_tbl,
+        array(
+            'subject_id' => $subjectId,
+            'subjectName' => $modelTestSubjectName,
+            'paperNo' => $modelTestPaper
+        )
+    );
+
+
+
+
+
+    // RECEIVING QUESTION AND OPTIONS
+    for ($getQuestion=1; $getQuestion <= $total_Question; $getQuestion++) { 
+        // echo $_POST["question_no_".$getQuestion]."<br>";
+        $question_title = $_POST["question_no_".$getQuestion];
+        $all_options = '';
+
+        for ($getOption=1; $getOption <= $optionLimit; $getOption++) { 
+            $all_options .= $_POST["options_".$getOption."_for_question_".$getQuestion]."/";
+        }
+
+        // GET CORRECT ANSWER FOR THIS QUESTION
+        $correctAnswerForThisQuestionIs = $_POST["answer_for_question_no_".$getQuestion];
+
+
+
+        // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
+            $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+            $wpdb->insert(
+                $Ruinfo_model_test_question_tbl,
+                array(
+                    'subject_id' => $subjectId,
+                    'question_title' => $question_title,
+                    'question_options' => $all_options,
+                    'correct_answer' => $correctAnswerForThisQuestionIs
+                )
+            );
+        // echo $correctAnswerForThisQuestionIs;
+        // echo $optionIs;
+    }
    
-    if( empty($_POST['subjectName']) || empty($_POST['subjectPaper']) || empty($_POST['topicName'])){
-        // add_action('admin_notices', 'empty_notice_hndlr');
-        echo 'some field is empty.';
-    }
-    else{
-        
-    }
-
-
-    exit;
  }
 
 
