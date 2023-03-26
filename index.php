@@ -313,4 +313,20 @@ add_filter('all_model_test_data_is_here', 'all_model_test_data_hndlr', 10);
 
 
 
+// COLLECT ALL DATA FROM SINGLE MODEL TEST QUESTION
+function single_model_test_info_func($subId){
+    global $wpdb;
+    $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+    $result = $wpdb->get_results(
+        // "SELECT * FROM $Ruinfo_model_test_question_tbl"
+        "SELECT * FROM $Ruinfo_model_test_question_tbl WHERE subject_id = '$subId'"
+    );
+
+    return $result;
+}
+add_filter('single_model_test_info', 'single_model_test_info_func', 10, 1);
+
+
+
+
 // ?>
