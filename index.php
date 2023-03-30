@@ -100,6 +100,18 @@ function Ruinfo_installing_db() {
     dbDelta( $Ruinfo_model_test_question_tbl_query );
 
 
+    // USER MODEL TEST DATA STORAGE TABLE
+    $Ruinfo_user_modelt_test_data_storage_tbl = $wpdb->prefix.'Ruinfo_user_model_test_data_storage';
+    $Ruinfo_user_modelt_test_data_storage_tbl_query = "CREATE TABLE $Ruinfo_user_modelt_test_data_storage_tbl (
+        id INT(250) NOT NULL AUTO_INCREAMENT,
+        userID INT(250) NOT NULL,
+        questionID VARCHAR(250) NOT NULL,
+        userAnswer VARCHAR(250) NOT NULL,
+        PRIMARY KEY (id)
+    )$db_collate;";
+    dbDelta($Ruinfo_user_modelt_test_data_storage_tbl_query);
+
+
     // Clear the permalinks after the post type has been registered.
     flush_rewrite_rules();
 }
@@ -326,6 +338,53 @@ function single_model_test_info_func($subId){
 }
 add_filter('single_model_test_info', 'single_model_test_info_func', 10, 1);
 
+
+// USER ID HOOK
+function user_session_id_finder_fun($sessionID){
+    global $wpdb;
+    $Ruinfo_user_meta_tbl = $wpdb->prefix.'Ruinfo_user_meta';
+    $result = $wpdb->get_results(
+        "SELECT * FROM $Ruinfo_user_meta_tbl WHERE userSessionValue = '$sessionID'"
+    );
+    echo "<pre>";
+    print_r($result[0]->userSessionId);
+    echo "</pre>";exit;
+
+    return $result;
+}
+add_filter('user_session_id_finder', 'user_session_id_finder_fun', 10, 1);
+
+
+// COLLECT CUSTOM QUESTIONS ANSWER
+function custom_question_answer_sheet_fun($user_model_test_answer_sheet){
+    /**
+     * SAVE USER DATA INTO CUSTOM TBL (USER ID, MODEL TEST SUBJECT ID, QUESTION ID, USER ANSWER)
+     * 
+     */
+
+    echo "<pre>";
+    print_r($user_model_test_answer_sheet);
+    echo "</pre>";exit;
+
+
+
+    // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
+    $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+    $wpdb->insert(
+        $Ruinfo_model_test_question_tbl,
+        array(
+            'subject_id' => $subjectId,
+            'question_title' => $question_title,
+            'question_options' => $all_options,
+            'correct_answer' => $correctAnswerForThisQuestionIs
+        )
+    );
+
+    global $wpdb;
+    $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+    // $result = ;
+}
+add_filter('custom_question_answer_sheet', 'custom_question_answer_sheet_fun', 10, 1);
 
 
 
