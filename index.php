@@ -11,7 +11,7 @@
 * Plugin Name:       RUinfo
 * Plugin URI:        https://shafique.com
 * Description:       Description of the plugin.
-* Version:           1.1.0
+* Version:           1.0.0
 * Requires at least: 5.2
 * Requires PHP:      7.2
 * Author:            Muhammad Shafique Uddin
@@ -23,7 +23,7 @@
  
  // Ruinfo INFO DB VERSION
  global $Ruinfo_define_db_version;
- $Ruinfo_define_db_version = '1.1.0';
+ $Ruinfo_define_db_version = '1.0.0';
  
 /**
 * Activate the plugin.
@@ -87,7 +87,7 @@ function Ruinfo_installing_db() {
 
 
 
-    // CREATE MODEL TEST QUESTION+ANSWER TABLE
+    // ADMIN CREATE MODEL TEST QUESTION+ANSWER TABLE
     $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
     $Ruinfo_model_test_question_tbl_query = "CREATE TABLE $Ruinfo_model_test_question_tbl (
         id INT(250) NOT NULL AUTO_INCREMENT,
@@ -100,16 +100,30 @@ function Ruinfo_installing_db() {
     dbDelta( $Ruinfo_model_test_question_tbl_query );
 
 
-    // USER MODEL TEST DATA STORAGE TABLE
-    $Ruinfo_user_modelt_test_data_storage_tbl = $wpdb->prefix.'Ruinfo_user_model_test_data_storage';
+    // USER SINGLE MODEL TEST DATA STORAGE TABLE
+    $Ruinfo_user_modelt_test_data_storage_tbl = $wpdb->prefix.'Ruinfo_user_model_test_single_info_data_storage';
     $Ruinfo_user_modelt_test_data_storage_tbl_query = "CREATE TABLE $Ruinfo_user_modelt_test_data_storage_tbl (
-        id INT(250) NOT NULL AUTO_INCREAMENT,
-        userID INT(250) NOT NULL,
+        id INT(250) NOT NULL AUTO_INCREMENT,
+        userID VARCHAR(250) NOT NULL,
         questionID VARCHAR(250) NOT NULL,
         userAnswer VARCHAR(250) NOT NULL,
         PRIMARY KEY (id)
     )$db_collate;";
     dbDelta($Ruinfo_user_modelt_test_data_storage_tbl_query);
+
+
+    // USER ALL MODEL TEST DATA INFO
+    $Ruinfo_user_modelt_test_all_data_info_tbl = $wpdb->prefix.'Ruinfo_user_all_model_test_data_storage';
+    $Ruinfo_user_modelt_test_all_data_info_tbl_query = "CREATE TABLE $Ruinfo_user_modelt_test_all_data_info_tbl (
+        id INT(250) NOT NULL AUTO_INCREMENT,
+        userID INT(250) NOT NULL,
+        modelTestName VARCHAR(250) NOT NULL,
+        modelTestID VARCHAR(250) NOT NULL,
+        obtainedMarks VARCHAR(250) NOT NULL,
+        TotalMarks VARCHAR(250) NOT NULL,
+        PRIMARY KEY (id)
+    )$db_collate;";
+    dbDelta($Ruinfo_user_modelt_test_all_data_info_tbl_query);
 
 
     // Clear the permalinks after the post type has been registered.
@@ -346,45 +360,95 @@ function user_session_id_finder_fun($sessionID){
     $result = $wpdb->get_results(
         "SELECT * FROM $Ruinfo_user_meta_tbl WHERE userSessionValue = '$sessionID'"
     );
-    echo "<pre>";
-    print_r($result[0]->userSessionId);
-    echo "</pre>";exit;
 
-    return $result;
+    return $result[0]->userSessionId;
 }
 add_filter('user_session_id_finder', 'user_session_id_finder_fun', 10, 1);
 
 
-// COLLECT CUSTOM QUESTIONS ANSWER
-function custom_question_answer_sheet_fun($user_model_test_answer_sheet){
-    /**
-     * SAVE USER DATA INTO CUSTOM TBL (USER ID, MODEL TEST SUBJECT ID, QUESTION ID, USER ANSWER)
-     * 
-     */
-
-    echo "<pre>";
-    print_r($user_model_test_answer_sheet);
-    echo "</pre>";exit;
-
-
-
-    // STORE DATA FOR MODEL TEST QUESTION+ANSWER TABLE
+// USER MODEL TEST RESULT (OBTAINED MARKS) HOOK
+function user_botained_marks_fun($user_model_test_answer_sheet){
+    
+    $correct_answer_is = 0;
+    global $wpdb;
     $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+    foreach ($user_model_test_answer_sheet as $key => $value) {
+        
+        $model_test_result_query = $wpdb->get_results(
+            "
+                SELECT *
+                FROM $Ruinfo_model_test_question_tbl
+                WHERE id = '$key'
+                AND correct_answer = '$value'
+            "
+        );
+
+        if(count($model_test_result_query) > 0){
+            $correct_answer_is++;
+        }
+    }
+    return $correct_answer_is;
+}
+add_filter('user_botained_marks', 'user_botained_marks_fun', 10, 1);
+
+
+// COLLECT CUSTOM QUESTIONS ANSWER
+function custom_question_answer_sheet_fun($user_model_test_answer_sheet, $user_model_test_result){
+    global $wpdb;
+    $current_user_id = $user_model_test_result['userID'];
+    foreach ($user_model_test_answer_sheet as $key => $value) {
+        // STORE SINGLE QUESTION WISE MODEL DATA FOR USER
+        $Ruinfo_user_modelt_test_data_storage_tbl = $wpdb->prefix.'Ruinfo_user_model_test_single_info_data_storage';
+        $wpdb->insert(
+            $Ruinfo_user_modelt_test_data_storage_tbl,
+            array(
+                'userID' => $current_user_id,
+                'questionID' => $key,
+                'userAnswer' => $value
+            )
+        );
+    }
+
+
+    // echo "<pre>";
+    // print_r($user_model_test_answer_sheet);
+    // echo "</pre>";
+
+    // echo "<pre>";
+    // print_r($user_model_test_result);
+    // echo "</pre>";
+    
+    
+    
+    // exit;
+
+
+    // STORE USER ALL MODEL TEST DATA TO USER ALL MODEL TEST DB
+    $Ruinfo_user_modelt_test_all_data_info_tbl = $wpdb->prefix.'Ruinfo_user_all_model_test_data_storage';
     $wpdb->insert(
-        $Ruinfo_model_test_question_tbl,
+        $Ruinfo_user_modelt_test_all_data_info_tbl,
         array(
-            'subject_id' => $subjectId,
-            'question_title' => $question_title,
-            'question_options' => $all_options,
-            'correct_answer' => $correctAnswerForThisQuestionIs
+            'userID' => $user_model_test_result['userID'],
+            'modelTestName' => $user_model_test_result['modelTestName'],
+            'modelTestID' => $user_model_test_result['modelTestID'],
+            'obtainedMarks' => $user_model_test_result['obtainedMarks'],
+            'TotalMarks' => $user_model_test_result['TotalMarks']
         )
     );
 
-    global $wpdb;
-    $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
+
+
+
+
+
+    $result = $user_model_test_result['obtainedMarks'];
+    return $result;
+
+
+    // $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
     // $result = ;
 }
-add_filter('custom_question_answer_sheet', 'custom_question_answer_sheet_fun', 10, 1);
+add_filter('custom_question_answer_sheet', 'custom_question_answer_sheet_fun', 10, 2);
 
 
 
