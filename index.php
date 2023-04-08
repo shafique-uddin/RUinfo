@@ -436,17 +436,8 @@ function custom_question_answer_sheet_fun($user_model_test_answer_sheet, $user_m
         )
     );
 
-
-
-
-
-
     $result = $user_model_test_result['obtainedMarks'];
     return $result;
-
-
-    // $Ruinfo_model_test_question_tbl = $wpdb->prefix.'Ruinfo_model_test_question';
-    // $result = ;
 }
 add_filter('custom_question_answer_sheet', 'custom_question_answer_sheet_fun', 10, 2);
 
