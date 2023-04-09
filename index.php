@@ -121,6 +121,8 @@ function Ruinfo_installing_db() {
         modelTestID VARCHAR(250) NOT NULL,
         obtainedMarks VARCHAR(250) NOT NULL,
         TotalMarks VARCHAR(250) NOT NULL,
+        currentTime VARCHAR(250) NOT NULL,
+        dateIs VARCHAR(250) NOT NULL,
         PRIMARY KEY (id)
     )$db_collate;";
     dbDelta($Ruinfo_user_modelt_test_all_data_info_tbl_query);
@@ -366,7 +368,7 @@ function user_session_id_finder_fun($sessionID){
 add_filter('user_session_id_finder', 'user_session_id_finder_fun', 10, 1);
 
 
-// USER MODEL TEST RESULT (OBTAINED MARKS) HOOK
+// USER MODEL TEST RESULT (OBTAINED MARKS) HOOK (only total correct answer)
 function user_botained_marks_fun($user_model_test_answer_sheet){
     
     $correct_answer_is = 0;
@@ -432,7 +434,9 @@ function custom_question_answer_sheet_fun($user_model_test_answer_sheet, $user_m
             'modelTestName' => $user_model_test_result['modelTestName'],
             'modelTestID' => $user_model_test_result['modelTestID'],
             'obtainedMarks' => $user_model_test_result['obtainedMarks'],
-            'TotalMarks' => $user_model_test_result['TotalMarks']
+            'TotalMarks' => $user_model_test_result['TotalMarks'],
+            'currentTime' => time(),
+            'dateIs' => date('d-M-Y')
         )
     );
 
@@ -442,5 +446,22 @@ function custom_question_answer_sheet_fun($user_model_test_answer_sheet, $user_m
 add_filter('custom_question_answer_sheet', 'custom_question_answer_sheet_fun', 10, 2);
 
 
+// GET HOLE MODEL TEST INFO FOR UNIQUE USER
+function Ruinfo_get_model_test_info_for_per_user_fun($userID){
+    global $wpdb;
+    $Ruinfo_all_model_test_data = $wpdb->prefix.'Ruinfo_user_all_model_test_data_storage';
+        
+    $model_test_result_query = $wpdb->get_results(
+        "
+            SELECT *
+            FROM $Ruinfo_all_model_test_data
+            WHERE userID = '$userID'
+        "
+    );
+
+    return $model_test_result_query;
+
+}
+add_filter('Ruinfo_get_model_test_info_for_per_user', 'Ruinfo_get_model_test_info_for_per_user_fun', 10, 1);
 
 // ?>
