@@ -67,3 +67,7 @@ input[type=button]{
     border: 1px solid rgb(135, 168, 146);
     padding: 0px 15px 10px;
 }
+
+#model_test_routine .row{
+    margin-bottom: 5px;
+}

@@ -210,8 +210,9 @@ add_action( 'plugins_loaded', 'Ruinfo_update_checking_hndl' );
 function Ruinfo_admin_menu_hndlr(){
     add_menu_page( 'Ruinfo Information', 'Ruinfo Info', 'manage_options', 'Ruinfopage', 'Ruinfo_all_varsity_info_hndlr', 'dashicons-database-view' );
     add_submenu_page( 'Ruinfopage', 'Total Member', 'Total Member', 'manage_options', 'Ruinfopage' );
-    add_submenu_page( 'Ruinfopage', 'Add Model Test', 'Add Model Test', 'manage_options', 'add-new-model-test', 'Ruinfo_add_new_model_test_frm_hndlr' );
     add_submenu_page( 'Ruinfopage', 'Ruinfo Info All Model Test', 'All Model Test', 'manage_options', 'Ruinfo-info-all-model-test', 'Ruinfo_all_model_test_frm_hndlr' );
+    add_submenu_page( 'Ruinfopage', 'Add Model Test', 'Add Model Test', 'manage_options', 'add-new-model-test', 'Ruinfo_add_new_model_test_frm_hndlr' );
+    add_submenu_page('Ruinfopage', 'Model Test Routine', 'Make Routine', 'manage_options', 'upcoming-routine', 'Ruinfo_upcoming_routine_hndlr');
 }
 add_action('admin_menu','Ruinfo_admin_menu_hndlr');
 
@@ -239,6 +240,13 @@ function Ruinfo_all_model_test_frm_hndlr(){
     include_once ('includes/model-test/index.php');
 }
 
+/**
+ * MODEL TEST ROUTINE Handler
+ */
+function Ruinfo_upcoming_routine_hndlr(){
+    include_once('includes/model-test-routine/routine.php');
+}
+
 
 /**
  * Plugin Admin Menu Page Styling
@@ -248,11 +256,12 @@ function Ruinfo_admin_page_CSS_JS_include_hndlr($screen){
     // echo "<pre>";
     // print_r($screen);
     // echo "</pre>"; exit;
-    if(('ruinfo-info_page_add-new-model-test' == $screen)||('ruinfo-info_page_Ruinfo-info-all-model-test' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
+    if(('ruinfo-info_page_add-new-model-test' == $screen)||('ruinfo-info_page_upcoming-routine' == $screen)||('ruinfo-info_page_Ruinfo-info-all-model-test' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
        wp_enqueue_style( 'Ruinfo-info-custom-css', plugin_dir_url( __FILE__ ).'lib/css/main.css', null, time() );
        wp_enqueue_style( 'Ruinfo-info-bootstrap-css-handler', '//cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-stylesheet', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-demo-stylesheet', '/resources/demos/style.css');
+       wp_enqueue_style( 'Ruinfo-info-bootstrap-css-icon', '//cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css');
        wp_enqueue_script( 'Ruinfo-info-main-jquery', plugin_dir_url( __FILE__ ).'admin/js/main.js', null , null , true );
        wp_enqueue_script( 'Ruinfo-info-custom-javascript', plugin_dir_url( __FILE__ ).'lib/js/custom.js', null , time() , true );
        wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-1.12.4.js', array('json2'), '1.12.4', true );
