@@ -46,19 +46,20 @@ if(isset($_GET['edit'])){
         <div class="row">
             <div class="col-2">Total Time</div>
             <div class="col-10">
-                <input type="text" name="totalTime" value="<?php if(isset($_POST['subjectName'])){echo $_POST['totalTime'];} ?>" id="">
+                <input type="text" name="totalTime" value="<?php if(isset($_POST['totalTime'])){echo $_POST['totalTime'];} ?>" id=""> Minutes
             </div>
         </div>
         <div class="row">
             <div class="col-2">Total Number</div>
             <div class="col-10">
-                <input type="text" name="totalNumber" value="<?php if(isset($_POST['subjectName'])){echo $_POST['totalTime'];} ?>" id=""> Minutes
+                <input type="text" name="totalNumber" value="<?php if(isset($_POST['totalNumber'])){echo $_POST['totalNumber'];} ?>" id="">
             </div>
         </div>
         <div class="row">
             <div class="col-2">Exam Date</div>
             <div class="col-10">
-                <input type="text" name="examDate" value="<?php if(isset($_POST['subjectName'])){echo $_POST['totalTime'];} ?>" id="">
+                <!-- <input id="datepicker-example1" type="text" name="examDate"> -->
+                <input type="text" autocomplete="off" name="modelTest_date" id="datepicker" value="<?php if(isset($mylink->admission_date)) echo $mylink->admission_date; ?>">
             </div>
         </div>
 
@@ -75,6 +76,17 @@ if(isset($_GET['edit'])){
 
 
 <section id="routine_preview" class="mt-5">
+    <?php 
+    $result = apply_filters('Ruinfo_get_model_test_routine_info', 'Model Test Routine'); 
+   
+    
+    
+    // exit;
+    if(count($result) == 0){
+        _e('Result has not published yet.');
+    }
+    else{ ?>
+
 <h2><i class="bi bi-arrow-down-square-fill"></i> Routine</h2>
 
     <table class="table table-hover">
@@ -85,30 +97,25 @@ if(isset($_GET['edit'])){
                 <th scope="col">Topic/Chapter</th>
                 <th scope="col">Total Time</th>
                 <th scope="col">Total Number</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
+            <?php 
+            foreach ($result as $key => $valueOf) { ?>
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>@mdo</td>
+                <th scope="row"><?php echo $valueOf->examDate; ?></th>
+                <td><?php echo $valueOf->subjectName.'('.$valueOf->subjectPaper.')'; ?></td>
+                <td><?php echo $valueOf->topic_chapterName; ?></td>
+                <td><?php echo $valueOf->totalExamTime; ?></td>
+                <td><?php echo $valueOf->TotalMarks; ?></td>
+                <td><a href="<?php echo $valueOf->id; ?>">Update</a> / <a href="<?php echo $valueOf->id; ?>">Delete</a></td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-                <td>@twitter</td>
-            </tr>
+            <?php } ?>
         </tbody>
     </table>
 </section>
 
+<?php 
+}
+?>

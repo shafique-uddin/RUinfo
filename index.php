@@ -127,6 +127,20 @@ function Ruinfo_installing_db() {
     )$db_collate;";
     dbDelta($Ruinfo_user_modelt_test_all_data_info_tbl_query);
 
+    // MODEL TEST ROUTINE TABLE
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+    $Ruinfo_model_test_routine_tbl_query = "CREATE TABLE $Ruinfo_model_test_routine_tbl (
+        id INT(250) NOT NULL AUTO_INCREMENT,
+        examDate VARCHAR(250) NOT NULL,
+        subjectName VARCHAR(250) NOT NULL,
+        subjectPaper VARCHAR(250) NOT NULL,
+        topic_chapterName VARCHAR(250) NOT NULL,
+        totalExamTime VARCHAR(250) NOT NULL,
+        TotalMarks VARCHAR(250) NOT NULL,
+        PRIMARY KEY (id)
+    )$db_collate;";
+    dbDelta($Ruinfo_model_test_routine_tbl_query);
+
 
     // Clear the permalinks after the post type has been registered.
     flush_rewrite_rules();
@@ -262,7 +276,7 @@ function Ruinfo_admin_page_CSS_JS_include_hndlr($screen){
        wp_enqueue_style( 'Ruinfo-info-date-picker-stylesheet', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-demo-stylesheet', '/resources/demos/style.css');
        wp_enqueue_style( 'Ruinfo-info-bootstrap-css-icon', '//cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css');
-       wp_enqueue_script( 'Ruinfo-info-main-jquery', plugin_dir_url( __FILE__ ).'admin/js/main.js', null , null , true );
+       wp_enqueue_script( 'Ruinfo-info-main-jquery', plugin_dir_url( __FILE__ ).'lib/js/datepickerJs.js', null , null , true );
        wp_enqueue_script( 'Ruinfo-info-custom-javascript', plugin_dir_url( __FILE__ ).'lib/js/custom.js', null , time() , true );
        wp_enqueue_script( 'jquery', 'https://code.jquery.com/jquery-1.12.4.js', array('json2'), '1.12.4', true );
        wp_enqueue_script( 'jquery-ui-datepicker', 'https://code.jquery.com/ui/1.12.1/jquery-ui.js', array('jquery'), '1.11.4', true );
@@ -472,5 +486,68 @@ function Ruinfo_get_model_test_info_for_per_user_fun($userID){
 
 }
 add_filter('Ruinfo_get_model_test_info_for_per_user', 'Ruinfo_get_model_test_info_for_per_user_fun', 10, 1);
+
+
+// GET MODEL TEST ROUTINE SPECIFIC DATA
+function Ruinfo_get_model_test_routine_info_single_dt_func($id){
+    echo $id; exit;
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $Ruinfo_model_test_routine_tbl_query = $wpdb->get_results(
+        "
+            SELECT *
+            FROM $Ruinfo_model_test_routine_tbl
+            WHERE id = '$userID'
+        "
+    );
+
+    return $Ruinfo_model_test_routine_tbl_query;
+}
+add_filter('Ruinfo_get_model_test_routine_info_single_dt', 'Ruinfo_get_model_test_routine_info_single_dt_func', 10, 1);
+
+
+// GET MODEL TEST ROUTINE ALL DATA
+function Ruinfo_get_model_test_routine_info_func(){
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $Ruinfo_model_test_routine_tbl_query = $wpdb->get_results(
+        "
+            SELECT *
+            FROM $Ruinfo_model_test_routine_tbl
+        "
+    );
+
+    return $Ruinfo_model_test_routine_tbl_query;
+}
+add_filter('Ruinfo_get_model_test_routine_info', 'Ruinfo_get_model_test_routine_info_func', 10);
+
+
+// MODEL TEST ROUTINE SUBMISSION
+if(isset($_POST['model_test_routine'])){
+    $subjectName = $_POST['subjectName'];
+    $subjectPaper = $_POST['subjectPaper'];
+    $topicName = $_POST['topicName'];
+    $totalTime = $_POST['totalTime'];
+    $totalNumber = $_POST['totalNumber'];
+    $modelTest_date = $_POST['modelTest_date'];
+
+    // STORE MODEL TEST ROUTINE
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $wpdb->insert(
+        $Ruinfo_model_test_routine_tbl,
+        array(
+            'examDate' => $modelTest_date,
+            'subjectName' => $subjectName,
+            'subjectPaper' => $subjectPaper,
+            'topic_chapterName' => $topicName,
+            'totalExamTime' => $totalTime,
+            'TotalMarks' => $totalNumber
+        )
+    );
+}
 
 // ?>
