@@ -4,7 +4,7 @@
 if(isset($_GET['edit'])){
     $post_id_no = sanitize_text_field($_GET['edit']); 
     global $wpdb;
-    $tbl_name = $wpdb->prefix.'admission_info_db';
+    $tbl_name = $wpdb->prefix.'Ruinfo_model_test_routine';
     $mylink = $wpdb->get_row( "SELECT * FROM $tbl_name WHERE id = $post_id_no" );
 }
 ?>
@@ -28,45 +28,50 @@ if(isset($_GET['edit'])){
         <div class="row">
             <div class="col-2">Subject Name</div>
             <div class="col-10">
-                <input type="text" required name="subjectName" id="" value="<?php if(isset($_POST['subjectName'])){echo $_POST['subjectName'];} ?>">
+                <input type="text" required name="subjectName" id="" value="<?php if(isset($mylink)){echo $mylink->subjectName;} ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-2">Paper</div>
             <div class="col-10">
-                <input type="text" required name="subjectPaper" id="" value="<?php if(isset($_POST['subjectPaper'])){echo $_POST['subjectPaper'];} ?>">
+                <input type="text" required name="subjectPaper" id="" value="<?php if(isset($mylink)){echo $mylink->subjectPaper;} ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-2">Topic/Chapter Name</div>
             <div class="col-10">
-                <input type="text" required name="topicName" id="" value="<?php if(isset($_POST['topicName'])){echo $_POST['topicName'];} ?>">
+                <input type="text" required name="topicName" id="" value="<?php if(isset($mylink)){echo $mylink->topic_chapterName;} ?>">
             </div>
         </div>
         <div class="row">
             <div class="col-2">Total Time</div>
             <div class="col-10">
-                <input type="text" name="totalTime" value="<?php if(isset($_POST['totalTime'])){echo $_POST['totalTime'];} ?>" id=""> Minutes
+                <input type="text" name="totalTime" value="<?php if(isset($mylink)){echo $mylink->totalExamTime;} ?>" id=""> Minutes
             </div>
         </div>
         <div class="row">
             <div class="col-2">Total Number</div>
             <div class="col-10">
-                <input type="text" name="totalNumber" value="<?php if(isset($_POST['totalNumber'])){echo $_POST['totalNumber'];} ?>" id="">
+                <input type="text" name="totalNumber" value="<?php if(isset($mylink)){echo $mylink->TotalMarks;} ?>" id="">
             </div>
         </div>
         <div class="row">
             <div class="col-2">Exam Date</div>
             <div class="col-10">
                 <!-- <input id="datepicker-example1" type="text" name="examDate"> -->
-                <input type="text" autocomplete="off" name="modelTest_date" id="datepicker" value="<?php if(isset($mylink->admission_date)) echo $mylink->admission_date; ?>">
+                <input type="text" autocomplete="off" name="modelTest_date" id="datepicker" value="<?php if(isset($mylink->examDate)){echo $mylink->examDate;} ?>">
             </div>
         </div>
 
 
         <div class="row">
-            <div class="col-12">
-                <input type="submit" value="Submit" name="model_test_routine">
+            <?php if(isset($mylink)){?>
+                    <input type="hidden" name="id" value="<?php echo $post_id_no;?>">
+            <?php } ?>
+
+            <div class="col">
+                <input type="submit" value="<?php echo (isset($mylink)) ? 'Update':'Submit'; ?>" name="<?php echo (isset($mylink)) ? 'model_test_routine_update':'model_test_routine_insert'; ?>">
+                <button class="routine_page_add_new_item_cls"><a href="<?php echo admin_url('admin.php?page=upcoming-routine');?>">Add New</a></button>
             </div>
         </div>
 
@@ -102,14 +107,17 @@ if(isset($_GET['edit'])){
         </thead>
         <tbody>
             <?php 
-            foreach ($result as $key => $valueOf) { ?>
+                foreach ($result as $key => $valueOf) {
+                    $updateRoutineItem = admin_url('admin.php?page=upcoming-routine&edit='.$valueOf->id);
+                    $deleteRoutineItem = admin_url('admin.php?page=upcoming-routine&routine-id='.$valueOf->id);
+            ?>
             <tr>
                 <th scope="row"><?php echo $valueOf->examDate; ?></th>
                 <td><?php echo $valueOf->subjectName.'('.$valueOf->subjectPaper.')'; ?></td>
                 <td><?php echo $valueOf->topic_chapterName; ?></td>
                 <td><?php echo $valueOf->totalExamTime; ?></td>
                 <td><?php echo $valueOf->TotalMarks; ?></td>
-                <td><a href="<?php echo $valueOf->id; ?>">Update</a> / <a href="<?php echo $valueOf->id; ?>">Delete</a></td>
+                <td><a href="<?php echo $updateRoutineItem; ?>">Update</a> / <a href="<?php echo $deleteRoutineItem; ?>">Delete</a></td>
             </tr>
             <?php } ?>
         </tbody>

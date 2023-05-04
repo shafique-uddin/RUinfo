@@ -488,25 +488,6 @@ function Ruinfo_get_model_test_info_for_per_user_fun($userID){
 add_filter('Ruinfo_get_model_test_info_for_per_user', 'Ruinfo_get_model_test_info_for_per_user_fun', 10, 1);
 
 
-// GET MODEL TEST ROUTINE SPECIFIC DATA
-function Ruinfo_get_model_test_routine_info_single_dt_func($id){
-    echo $id; exit;
-    global $wpdb;
-    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
-
-    $Ruinfo_model_test_routine_tbl_query = $wpdb->get_results(
-        "
-            SELECT *
-            FROM $Ruinfo_model_test_routine_tbl
-            WHERE id = '$userID'
-        "
-    );
-
-    return $Ruinfo_model_test_routine_tbl_query;
-}
-add_filter('Ruinfo_get_model_test_routine_info_single_dt', 'Ruinfo_get_model_test_routine_info_single_dt_func', 10, 1);
-
-
 // GET MODEL TEST ROUTINE ALL DATA
 function Ruinfo_get_model_test_routine_info_func(){
     global $wpdb;
@@ -525,7 +506,7 @@ add_filter('Ruinfo_get_model_test_routine_info', 'Ruinfo_get_model_test_routine_
 
 
 // MODEL TEST ROUTINE SUBMISSION
-if(isset($_POST['model_test_routine'])){
+if(isset($_POST['model_test_routine_insert'])){
     $subjectName = $_POST['subjectName'];
     $subjectPaper = $_POST['subjectPaper'];
     $topicName = $_POST['topicName'];
@@ -549,5 +530,81 @@ if(isset($_POST['model_test_routine'])){
         )
     );
 }
+
+
+// MODEL TEST ROUTINE UPDATE
+if(isset($_POST['model_test_routine_update'])){
+    $subjectName = $_POST['subjectName'];
+    $subjectPaper = $_POST['subjectPaper'];
+    $topicName = $_POST['topicName'];
+    $totalTime = $_POST['totalTime'];
+    $totalNumber = $_POST['totalNumber'];
+    $modelTest_date = $_POST['modelTest_date'];
+    $dbId = $_POST['id'];
+
+    // STORE MODEL TEST ROUTINE
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $wpdb->update(
+        $Ruinfo_model_test_routine_tbl,
+        array(
+            'examDate' => $modelTest_date,
+            'subjectName' => $subjectName,
+            'subjectPaper' => $subjectPaper,
+            'topic_chapterName' => $topicName,
+            'totalExamTime' => $totalTime,
+            'TotalMarks' => $totalNumber
+        ),
+        array(
+            'id' => $dbId
+        )
+    );
+}
+
+
+// MODEL TEST ROUTINE DELETE
+if(isset($_POST['model_test_routine_update'])){
+    $subjectName = $_POST['subjectName'];
+    $subjectPaper = $_POST['subjectPaper'];
+    $topicName = $_POST['topicName'];
+    $totalTime = $_POST['totalTime'];
+    $totalNumber = $_POST['totalNumber'];
+    $modelTest_date = $_POST['modelTest_date'];
+    $dbId = $_POST['id'];
+
+    // STORE MODEL TEST ROUTINE
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $wpdb->update(
+        $Ruinfo_model_test_routine_tbl,
+        array(
+            'examDate' => $modelTest_date,
+            'subjectName' => $subjectName,
+            'subjectPaper' => $subjectPaper,
+            'topic_chapterName' => $topicName,
+            'totalExamTime' => $totalTime,
+            'TotalMarks' => $totalNumber
+        ),
+        array(
+            'id' => $dbId
+        )
+    );
+}
+
+
+
+// UPDATE MODEL TEST ROUTINE FOR SPECIFIC SECTION
+if(isset($_GET['routine-id'])){
+    $modelTestRoutineId = $_GET['routine-id'];
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $Ruinfo_model_test_routine_tbl_query = $wpdb->delete( "$Ruinfo_model_test_routine_tbl", array( 'id' => $modelTestRoutineId ) );
+
+    // return $Ruinfo_model_test_routine_tbl_query;
+}
+
 
 // ?>

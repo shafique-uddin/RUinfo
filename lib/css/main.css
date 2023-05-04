@@ -71,3 +71,24 @@ input[type=button]{
 #model_test_routine .row{
     margin-bottom: 5px;
 }
+
+button.routine_page_add_new_item_cls{
+    /* border: 1px solid black; */
+    border-width: 1px;
+    border-style: outset;
+    border-color: rgb(128, 126, 126);
+    border-image: initial;
+    margin-left: 5px;
+    border-radius: 3px;
+    padding: 2px 6px;
+}
+
+button.routine_page_add_new_item_cls a {
+    text-decoration: none;
+    color: black
+}
+
+button.routine_page_add_new_item_cls:hover{
+    cursor: pointer;
+    background-color: rgb(224, 224, 224);;
+}
