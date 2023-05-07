@@ -132,11 +132,13 @@ function Ruinfo_installing_db() {
     $Ruinfo_model_test_routine_tbl_query = "CREATE TABLE $Ruinfo_model_test_routine_tbl (
         id INT(250) NOT NULL AUTO_INCREMENT,
         examDate VARCHAR(250) NOT NULL,
+        examTime VARCHAR(250) NOT NULL,
         subjectName VARCHAR(250) NOT NULL,
         subjectPaper VARCHAR(250) NOT NULL,
         topic_chapterName VARCHAR(250) NOT NULL,
         totalExamTime VARCHAR(250) NOT NULL,
         TotalMarks VARCHAR(250) NOT NULL,
+        modelTestStatus VARCHAR(250) NOT NULL,
         PRIMARY KEY (id)
     )$db_collate;";
     dbDelta($Ruinfo_model_test_routine_tbl_query);
@@ -513,6 +515,8 @@ if(isset($_POST['model_test_routine_insert'])){
     $totalTime = $_POST['totalTime'];
     $totalNumber = $_POST['totalNumber'];
     $modelTest_date = $_POST['modelTest_date'];
+    $modelTestStatus = $_POST['examStatus'];
+    $modelTest_time = $_POST['examTime'];
 
     // STORE MODEL TEST ROUTINE
     global $wpdb;
@@ -522,11 +526,13 @@ if(isset($_POST['model_test_routine_insert'])){
         $Ruinfo_model_test_routine_tbl,
         array(
             'examDate' => $modelTest_date,
+            'examTime' => $modelTest_time,
             'subjectName' => $subjectName,
             'subjectPaper' => $subjectPaper,
             'topic_chapterName' => $topicName,
             'totalExamTime' => $totalTime,
-            'TotalMarks' => $totalNumber
+            'TotalMarks' => $totalNumber,
+            'modelTestStatus' => $modelTestStatus
         )
     );
 }
@@ -540,7 +546,11 @@ if(isset($_POST['model_test_routine_update'])){
     $totalTime = $_POST['totalTime'];
     $totalNumber = $_POST['totalNumber'];
     $modelTest_date = $_POST['modelTest_date'];
+    $modelTest_time = $_POST['examTime'];
+    $modelTestStatus = $_POST['examStatus'];
     $dbId = $_POST['id'];
+
+    echo $modelTestStatus; exit;
 
     // STORE MODEL TEST ROUTINE
     global $wpdb;
@@ -550,11 +560,13 @@ if(isset($_POST['model_test_routine_update'])){
         $Ruinfo_model_test_routine_tbl,
         array(
             'examDate' => $modelTest_date,
+            'examTime' => $modelTest_time,
             'subjectName' => $subjectName,
             'subjectPaper' => $subjectPaper,
             'topic_chapterName' => $topicName,
             'totalExamTime' => $totalTime,
-            'TotalMarks' => $totalNumber
+            'TotalMarks' => $totalNumber,
+            'modelTestStatus' => $modelTestStatus
         ),
         array(
             'id' => $dbId
@@ -571,6 +583,8 @@ if(isset($_POST['model_test_routine_update'])){
     $totalTime = $_POST['totalTime'];
     $totalNumber = $_POST['totalNumber'];
     $modelTest_date = $_POST['modelTest_date'];
+    $modelTest_time = $_POST['examTime'];
+    $modelTestStatus = $_POST['examStatus'];
     $dbId = $_POST['id'];
 
     // STORE MODEL TEST ROUTINE
@@ -581,11 +595,13 @@ if(isset($_POST['model_test_routine_update'])){
         $Ruinfo_model_test_routine_tbl,
         array(
             'examDate' => $modelTest_date,
+            'examTime' => $modelTest_time,
             'subjectName' => $subjectName,
             'subjectPaper' => $subjectPaper,
             'topic_chapterName' => $topicName,
             'totalExamTime' => $totalTime,
-            'TotalMarks' => $totalNumber
+            'TotalMarks' => $totalNumber,
+            'modelTestStatus' => $modelTestStatus
         ),
         array(
             'id' => $dbId

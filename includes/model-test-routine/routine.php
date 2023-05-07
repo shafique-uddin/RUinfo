@@ -6,6 +6,19 @@ if(isset($_GET['edit'])){
     global $wpdb;
     $tbl_name = $wpdb->prefix.'Ruinfo_model_test_routine';
     $mylink = $wpdb->get_row( "SELECT * FROM $tbl_name WHERE id = $post_id_no" );
+    // echo "<pre>";
+    // print_r($mylink);
+    // echo "</pre>"; 
+    // exit;
+    if($mylink->modelTestStatus == 'On'){
+        $chcked = 'checked';
+    } 
+    if($mylink->modelTestStatus == 'Off'){
+        $chcked = '';
+    }
+
+    // $chcked = ($mylink->modelTestStatus == 'On')?'Checked':' ';
+    // echo $chcked; exit;
 }
 ?>
 
@@ -56,11 +69,27 @@ if(isset($_GET['edit'])){
             </div>
         </div>
         <div class="row">
+            <div class="col-2">Exam Time</div>
+            <div class="col-10">
+                <input type="text" name="examTime" value="<?php if(isset($mylink)){echo $mylink->examTime;} ?>" id="">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-2">Exam Date</div>
             <div class="col-10">
                 <!-- <input id="datepicker-example1" type="text" name="examDate"> -->
                 <input type="text" autocomplete="off" name="modelTest_date" id="datepicker" value="<?php if(isset($mylink->examDate)){echo $mylink->examDate;} ?>">
             </div>
+        </div>
+        <div class="row">
+            <div class="col-2">Status</div>
+            <div class="col">
+                <input type="radio" name="examStatus" id="examStatusOn" value="On" <?php echo $chcked; ?>><label for="examStatusOn">On</label><br>
+                <input type="radio" name="examStatus" id="examStatusOff" value="Off" <?php echo $chcked; ?>><label for="examStatusOff">Off</label>
+            </div>
+
+                
+                <!-- <input type="text" name="examTime" value="<?php //if(isset($mylink)){// echo $mylink->examTime;} ?>" id=""> -->
         </div>
 
 
@@ -98,10 +127,12 @@ if(isset($_GET['edit'])){
         <thead>
             <tr>
                 <th scope="col">Exam Date</th>
+                <th scope="col">Exam Time</th>
                 <th scope="col">Subject Name (Paper)</th>
                 <th scope="col">Topic/Chapter</th>
                 <th scope="col">Total Time</th>
                 <th scope="col">Total Number</th>
+                <th scope="col">Activation</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -113,10 +144,12 @@ if(isset($_GET['edit'])){
             ?>
             <tr>
                 <th scope="row"><?php echo $valueOf->examDate; ?></th>
+                <td><?php echo $valueOf->examTime; ?></td>
                 <td><?php echo $valueOf->subjectName.'('.$valueOf->subjectPaper.')'; ?></td>
                 <td><?php echo $valueOf->topic_chapterName; ?></td>
                 <td><?php echo $valueOf->totalExamTime; ?></td>
                 <td><?php echo $valueOf->TotalMarks; ?></td>
+                <td class="text-center"><?php echo $valueOf->modelTestStatus; ?></td>
                 <td><a href="<?php echo $updateRoutineItem; ?>">Update</a> / <a href="<?php echo $deleteRoutineItem; ?>">Delete</a></td>
             </tr>
             <?php } ?>
