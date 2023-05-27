@@ -550,8 +550,6 @@ if(isset($_POST['model_test_routine_update'])){
     $modelTestStatus = $_POST['examStatus'];
     $dbId = $_POST['id'];
 
-    echo $modelTestStatus; exit;
-
     // STORE MODEL TEST ROUTINE
     global $wpdb;
     $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
