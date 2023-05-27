@@ -81,11 +81,12 @@ if(isset($_GET['edit'])){
                 <input type="text" autocomplete="off" name="modelTest_date" id="datepicker" value="<?php if(isset($mylink->examDate)){echo $mylink->examDate;} ?>">
             </div>
         </div>
-        <div class="row">
+        <div class="row routineBtnCls">
             <div class="col-2">Status</div>
             <div class="col">
-                <input type="radio" name="examStatus" id="examStatusOn" value="On" <?php if(isset($mylink)){if($mylink->modelTestStatus == 'On'){echo 'checked';}} ?>><label for="examStatusOn">On</label><br>
-                <input type="radio" name="examStatus" id="examStatusOff" value="Off" <?php if(isset($mylink)){if($mylink->modelTestStatus == 'Off'){echo 'checked';}} ?>><label for="examStatusOff">Off</label>
+                <input type="button" id="routineStatus" onclick="routineStatusFun(this)">
+                <input type="hidden" name="examStatus" id="examStatusValue">
+                <!-- <input type="radio" name="examStatus" id="examStatusOff" value="Off" <?php // if(isset($mylink)){if($mylink->modelTestStatus == 'Off'){echo 'checked';}} ?>><label for="examStatusOff">Off</label> -->
             </div>
 
                 

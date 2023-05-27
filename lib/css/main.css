@@ -92,3 +92,8 @@ button.routine_page_add_new_item_cls:hover{
     cursor: pointer;
     background-color: rgb(224, 224, 224);;
 }
+
+.routineBtnCls input[type="button"]{
+    border: 1px solid black;
+    cursor: pointer!important;
+}
