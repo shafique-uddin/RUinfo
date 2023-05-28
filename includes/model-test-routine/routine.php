@@ -84,8 +84,8 @@ if(isset($_GET['edit'])){
         <div class="row routineBtnCls">
             <div class="col-2">Status</div>
             <div class="col">
-                <input type="button" id="routineStatus" onclick="routineStatusFun(this)">
-                <input type="hidden" name="examStatus" id="examStatusValue">
+                <input type="button" class="<?php if(isset($mylink->modelTestStatus)){echo 'bgBtnClss'.$mylink->modelTestStatus;}else{echo 'bgBtnClssOff';} ?>" id="routineStatus" <?php if(isset($mylink->modelTestStatus)){echo 'value ="'.$mylink->modelTestStatus.'"';} ?> onclick="routineStatusFun(this)">
+                <input type="hidden" name="examStatus" id="examStatusValue" <?php if(isset($mylink->modelTestStatus)){echo 'value ="'.$mylink->modelTestStatus.'"';} ?>> 
                 <!-- <input type="radio" name="examStatus" id="examStatusOff" value="Off" <?php // if(isset($mylink)){if($mylink->modelTestStatus == 'Off'){echo 'checked';}} ?>><label for="examStatusOff">Off</label> -->
             </div>
 

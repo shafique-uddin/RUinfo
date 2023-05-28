@@ -96,4 +96,16 @@ button.routine_page_add_new_item_cls:hover{
 .routineBtnCls input[type="button"]{
     border: 1px solid black;
     cursor: pointer!important;
+    width: 100px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+
+.bgBtnClssOn{
+    background-color: green;
+}
+.bgBtnClssOff{
+    background-color: red;
 }
