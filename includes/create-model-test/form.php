@@ -1,11 +1,17 @@
 <?php 
 
 // Check Have Any Edit Data
-if(isset($_GET['edit'])){
-    $post_id_no = sanitize_text_field($_GET['edit']); 
+if(isset($_GET['update-questions-id'])){
+    $post_id_no = sanitize_text_field($_GET['update-questions-id']); 
     global $wpdb;
     $tbl_name = $wpdb->prefix.'admission_info_db';
     $mylink = $wpdb->get_row( "SELECT * FROM $tbl_name WHERE id = $post_id_no" );
+
+    // include_once('.\./model-test/edit.php');
+
+    include(plugin_dir_path(__FILE__).'edit.php');
+
+    exit;
 }
 ?>
 

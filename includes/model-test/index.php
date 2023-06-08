@@ -39,7 +39,7 @@ foreach ($result as $key => $value) { ?>
       <td><?php echo $value->topicOrChapter; ?></td>
       <td><?php if($value->modelTestStatus == '1'){echo 'On'; } else{ echo 'Off';} ?></td>
       <td style="text-align:center">
-      <a href="<?php echo admin_url().'admin.php?page=update-questions';?>">Edit</a> |
+      <a href="<?php echo admin_url().'admin.php?page=add-new-model-test&update-questions-id'?>">Edit</a> |
       <a href="">View</a> |
       <a href="">Delete</a>
       </td>
