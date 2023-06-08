@@ -11,8 +11,8 @@ if(isset($_GET['edit'])){
 
 
 
-
-<div class="admission-info-form-header">
+<div class="ruinfo_wrapper">
+<div class="ruinfo-admission-info-form-header">
     <div class="row">
         <div class="col-6">
             <div class="left-div">
@@ -21,7 +21,7 @@ if(isset($_GET['edit'])){
         </div>
         <div class="col-6">
             <div class="right-div">
-                <button>Add New Model Test</button>
+                <!-- <button>Add New Model Test</button> -->
             </div>
         </div>
     </div>
@@ -87,3 +87,5 @@ if(isset($_GET['edit'])){
 
 <?php // endwhile; ?>
 
+<!-- wrapper class end -->
+</div>

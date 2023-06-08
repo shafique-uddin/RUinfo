@@ -1,28 +1,57 @@
-<div class="row">
-    <div class="col-4">Model Test Subject</div>
-    <div class="col-1">Paper</div>
-    <div class="col-3">Topic</div>
-    <div class="col-1">Status</div>
-    <div class="col-3" style="text-align:center">Action</div>
+<div class="ruinfo_wrapper">
+
+
+<div class="ruinfo-admission-info-form-header">
+    <div class="row">
+        <div class="col-6">
+            <div class="left-div">
+                <?php _e('Date: '.date('d-F-Y')); ?>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="right-div">
+                <button><a href="<?php echo admin_url().'admin.php?page=add-new-model-test'; ?>">Add New Model Test</a></button>
+            </div>
+        </div>
+    </div>
 </div>
 
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Subject</th>
+      <th scope="col">Paper</th>
+      <th scope="col">Topic</th>
+      <th scope="col">Status</th>
+      <th scope="col" style="text-align:center">Action</th>
+    </tr>
+  </thead>
+  <tbody>
 
 
 <?php 
-$result = apply_filters('all_model_test_data_is_here', 'some data is here');
+  $result = apply_filters('all_model_test_data_is_here', 'some data is here');
 foreach ($result as $key => $value) { ?>
-<div class="row">
-    <div class="col-4"><?php echo $value->subjectName; ?></div>
-    <div class="col-1"><?php echo $value->paperNo; ?></div>
-    <div class="col-3"><?php echo $value->topicOrChapter; ?></div>
-    <div class="col-1"><?php if($value->modelTestStatus == '1'){echo 'On'; } else{ echo 'Off';} ?></div>
-    <div class="col-1"><a href="">Edit</a></div>
-    <div class="col-1"><a href="">View</a></div>
-    <div class="col-1"><a href="">Delete</a></div>
-</div>
-<?php }
-exit;
+
+    <tr>
+      <td><?php echo $value->subjectName; ?></td>
+      <td><?php echo $value->paperNo; ?></td>
+      <td><?php echo $value->topicOrChapter; ?></td>
+      <td><?php if($value->modelTestStatus == '1'){echo 'On'; } else{ echo 'Off';} ?></td>
+      <td style="text-align:center">
+      <a href="<?php echo admin_url().'admin.php?page=update-questions';?>">Edit</a> |
+      <a href="">View</a> |
+      <a href="">Delete</a>
+      </td>
+    </tr>
+
+    <?php }
 ?>
 
+  </tbody>
+</table>
 
 
+
+<!-- wrapper class end -->
+</div>

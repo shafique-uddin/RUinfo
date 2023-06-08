@@ -109,3 +109,32 @@ button.routine_page_add_new_item_cls:hover{
 .bgBtnClssOff{
     background-color: red;
 }
+
+
+.ruinfo_wrapper{
+    margin-top: 40px;
+}
+
+.right-div{
+    float: right;
+    text-align: right;
+    margin-right: 20px;
+}
+
+.ruinfo-admission-info-form-header{
+    margin-bottom: 20px;
+}
+
+.ruinfo-admission-info-form-header .right-div button{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.ruinfo-admission-info-form-header .right-div a{
+    text-decoration: none;
+    color: black;
+}
+
+.ruinfo-admission-info-form-header .right-div button:hover{
+    background: rgb(144, 248, 144);
+}
