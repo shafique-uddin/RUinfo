@@ -507,6 +507,24 @@ function Ruinfo_get_model_test_routine_info_func(){
 add_filter('Ruinfo_get_model_test_routine_info', 'Ruinfo_get_model_test_routine_info_func', 10);
 
 
+// GET ONLY ACTIVE [ON] MODEL TEST ROUTINE DATA
+function Ruinfo_get_active_model_test_routine_info_func(){
+    global $wpdb;
+    $Ruinfo_model_test_routine_tbl = $wpdb->prefix.'Ruinfo_model_test_routine';
+
+    $Ruinfo_model_test_routine_tbl_query = $wpdb->get_results(
+        "
+            SELECT *
+            FROM $Ruinfo_model_test_routine_tbl
+            WHERE modelTestStatus LIKE 'On'
+        "
+    );
+
+    return $Ruinfo_model_test_routine_tbl_query;
+}
+add_filter('Ruinfo_get_active_model_test_routine_info', 'Ruinfo_get_active_model_test_routine_info_func', 10);
+
+
 // MODEL TEST ROUTINE SUBMISSION
 if(isset($_POST['model_test_routine_insert'])){
     $subjectName = $_POST['subjectName'];
