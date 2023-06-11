@@ -113,6 +113,8 @@ button.routine_page_add_new_item_cls:hover{
 
 .ruinfo_wrapper{
     margin-top: 40px;
+    clear: both;
+    overflow: hidden;
 }
 
 .right-div{
@@ -137,4 +139,19 @@ button.routine_page_add_new_item_cls:hover{
 
 .ruinfo-admission-info-form-header .right-div button:hover{
     background: rgb(144, 248, 144);
+}
+
+.question_edit form tr th input[type="text"]{
+    width: 90%;
+    height: 40px;
+    
+}
+
+.question_edit form input[type="text"]{
+    width: 100%;
+    height: 40px;
+}
+
+.question_edit table tr:nth-child(even){
+    margin-bottom: 500px;
 }
