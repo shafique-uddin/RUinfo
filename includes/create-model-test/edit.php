@@ -15,7 +15,7 @@
 <table class="table table-striped">    
 
       <tr>
-        <th colspan="4">1. <input type="text" name="question_no_" id="" value="sample question no 1"></th>
+        <th colspan="4">1. <input type="text" name="question_no_" class="editor_popup" id="" value="sample question no 1"></th>
       </tr>
       <tr>
         <td>
