@@ -272,7 +272,12 @@ function Ruinfo_admin_page_CSS_JS_include_hndlr($screen){
     // echo "<pre>";
     // print_r($screen);
     // echo "</pre>"; exit;
-    if(('ruinfo-info_page_add-new-model-test' == $screen)||('ruinfo-info_page_upcoming-routine' == $screen)||('ruinfo-info_page_Ruinfo-info-all-model-test' == $screen)||('Ruinfo-info_page_add-new-varsity-info' == $screen) || ('Ruinfo-info_page_admission-info-file-attachment' == $screen)){
+    if(
+        ('ruinfo-info_page_add-new-model-test' == $screen)||
+        ('ruinfo-info_page_upcoming-routine' == $screen)||
+        ('ruinfo-info_page_Ruinfo-info-all-model-test' == $screen)||
+        ('Ruinfo-info_page_add-new-varsity-info' == $screen) || 
+        ('Ruinfo-info_page_admission-info-file-attachment' == $screen )){
        wp_enqueue_style( 'Ruinfo-info-custom-css', plugin_dir_url( __FILE__ ).'lib/css/main.css', null, time() );
        wp_enqueue_style( 'Ruinfo-info-bootstrap-css-handler', '//cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css');
        wp_enqueue_style( 'Ruinfo-info-date-picker-stylesheet', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');

@@ -10,9 +10,8 @@ if(isset($_GET['update-questions-id'])){
     // include_once('.\./model-test/edit.php');
 
     include(plugin_dir_path(__FILE__).'edit.php');
-
-    exit;
 }
+else{
 ?>
 
 
@@ -95,3 +94,5 @@ if(isset($_GET['update-questions-id'])){
 
 <!-- wrapper class end -->
 </div>
+
+<?php } ?>

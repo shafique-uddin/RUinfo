@@ -11,11 +11,69 @@
     </div>
   </div>
 
+
+
+  <section class="question_paper">
+    <div class="row question_title">
+      <div class="row">
+        <div class="col">
+          <div class="editor_icon">
+            <ul>
+              <li><i class="bi bi-type-bold" onclick="bolder(this)"></i></li>
+              <li><i class="bi bi-type-underline"></i></li>
+              <li><i class="bi bi-type-italic"></i></li>
+              <li><i class="bi bi-superscript"></i></li>
+              <li><i class="bi bi-subscript"></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          1. <input type="text" name="question_no_" onmouseleave="normalImg(this)" class="editor_popup" id="" value="sample question no 1">
+        </div>
+      </div>
+    </div>
+    <div class="row options_section">
+      <div class="col">
+        <input type="text" name="question_no_1_option_no_1" id="" value="sample Option no 1"><br>
+        <input type="text" name="question_no_1_option_no_2" id="" value="sample Option no 2"><br>
+        <input type="text" name="question_no_1_option_no_3" id="" value="sample Option no 3"><br>
+        <input type="text" name="question_no_1_option_no_4" id="" value="sample Option no 4">
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
 <form action="">
 <table class="table table-striped">    
 
       <tr>
-        <th colspan="4">1. <input type="text" name="question_no_" class="editor_popup" id="" value="sample question no 1"></th>
+        <div class="row">
+          <div class="col">
+            <div class="editor_icon">
+              <ul>
+                <li><i class="bi bi-type-bold"></i></li>
+                <li><i class="bi bi-type-underline"></i></li>
+                <li><i class="bi bi-type-italic"></i></li>
+                <li><i class="bi bi-superscript"></i></li>
+                <li><i class="bi bi-subscript"></i></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <th colspan="4">1. <input type="text" name="question_no_" onmouseleave="normalImg(this)" class="editor_popup" id="" value="sample question no 1"></th>
+          </div>
+        </div>
       </tr>
       <tr>
         <td>
