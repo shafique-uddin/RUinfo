@@ -164,3 +164,7 @@ button.routine_page_add_new_item_cls:hover{
 .editor_icon ul li:hover{
     cursor: pointer;
 }
+
+.question_paper .question_title .question{
+    background-color: rgb(241, 241, 241);
+}

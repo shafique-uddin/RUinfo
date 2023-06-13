@@ -29,7 +29,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
+        <div class="col question">
           1. <input type="text" name="question_no_" onmouseleave="normalImg(this)" class="editor_popup" id="" value="sample question no 1">
         </div>
       </div>
